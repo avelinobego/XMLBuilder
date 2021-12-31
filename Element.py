@@ -28,17 +28,17 @@ class element(object):
         self._value = None
         self._properties = None
 
-    def __make__(self) -> str:
+    def __make__(self, value: Any = None) -> str:
         p = ''.join(f' {k}="{v}"' for k, v in self._properties.items()) if self._properties is not None else ''
-        v = self._value if self._value is not None else ''
+        v = value if value is not None else ''
         result = f"<{self._name}{p}>{v}</{self._name}>"
         return result
 
     def __repr__(self) -> str:
         if not isinstance(self._value, str) and isinstance(self._value, Iterable):
-            return ''.join([str(e) for e in self._value])
+            return self.__make__(''.join([str(e) for e in self._value]))
         else:
-            return self.__make__()
+            return self.__make__(self._value)
 
 
 class repr: 
